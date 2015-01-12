@@ -41,9 +41,15 @@ class Image extends Field{
         $required = '';
         if($this->getRequired())
            $required = '<span class="required">*</span>';
+        
+        $subTitle = '';
+        if($this->getSubTitle())
+            $subTitle = '<span class="subtitle">'.$this->getSubTitle().'</span>';
+        
         return '<div class="form-group">
                     '.Form::label($this->getName(), $this->getTitle())
                      .$required
+                     .$subTitle
                      .Form::file($this->getName().'[]', array('class' => 'form-control', 'id' => $this->getName())).'
                 </div>';
     }
@@ -70,8 +76,31 @@ class Image extends Field{
         $file = $this->loadValue();
         if (Input::hasFile($this->getName()) && $file[0])
         {
+            $fileUploadErrors = array
+            (
+                0 => 'There is no error, the file uploaded with success',
+                1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+                2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+                3 => 'The uploaded file was only partially uploaded',
+                4 => 'No file was uploaded',
+                6 => 'Missing a temporary folder',
+                7 => 'Failed to write file to disk.',
+                8 => 'A PHP extension stopped the file upload.'
+            );
+
+            //verifica se existe erro no envio das imagens
+            foreach($_FILES['img_link']['error'] as $error)
+            {
+                if($error)
+                {
+                    return false;
+                    die('Error:'. $error);
+                }
+            }
+
             if(is_dir($this->path) || mkdir($this->path, 0755))
             {
+                
                 //Chama o arquivo com a classe WideImage
                 require_once(__DIR__.'/../../../wideimage/WideImage.php');
 

@@ -67,6 +67,54 @@ $page  = new XPage();
 $myApp->addPage($page);
 
 
+
+
+
+
+$page  = new XPage();
+    $page->setLoginRequired(true);
+    $page->setShowInMenuIfLogged(true);
+    $page->setRout('publishing-house');
+    $page->setTitle('Editora de revistas');
+        $form = new XForm();
+        $form->setTable('cormus_publishing_house');
+        $form->setTitle('Teste gerador');
+        $form->setSubTitle('Teste gerador');
+        
+        //$form->setShowBtnDelete(false);
+        //$form->setShowBtnEdit(false);
+        //$form->setShowSelectBox(false);
+        //$form->setShowBtnNewCadastre(false);
+        
+        //coloca o compo da imagem
+        $field = $form->field('image');
+        $field->setName('img_link');
+        $field->setTitle('Logomarca da editora');
+        $field->setPath('data/publishing_house');
+        $field->setRequired(true);
+        $form->addField($field);
+        
+        //coloca o campo de texto
+        $field = $form->field('text');
+        $field->setName('name');
+        $field->setRequired(true);
+        $field->setTitle('Nome da editora');
+        $form->addField($field);
+        
+        //coloca o campo de texto
+        $field = $form->field('textarea');
+        $field->setShowList(false);
+        $field->setName('history');
+        $field->setTitle('História');
+        $form->addField($field);
+        
+    $page->addModule('center', $form);       
+$myApp->addPage($page);
+
+
+
+
+
 $myApp->setMenuStructure(array(
     '/',
     array

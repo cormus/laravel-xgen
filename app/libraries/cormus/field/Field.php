@@ -9,6 +9,7 @@ abstract class Field
     var $row = null;
     var $name;
     var $title;
+    var $subTitle = '';
     var $size = 250;
     var $value = null;
     var $filter = false;
@@ -16,7 +17,6 @@ abstract class Field
     var $showForm = true;
     var $required = false;
     var $unique   = null;
-    
     
     abstract public function render($row);
     
@@ -53,6 +53,15 @@ abstract class Field
     public function getTitle()
     {
         return $this->title;
+    }
+    
+    public function setSubTitle($data)
+    {
+        $this->subTitle = $data;
+    }
+    public function getSubTitle()
+    {
+        return $this->subTitle;
     }
     
     public function setSize($data)

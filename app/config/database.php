@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'www.cormus.com.br',
-			'database'  => 'cormus_colecao',
-			'username'  => 'cormus_colecao',
-			'password'  => 'ye&{*sMoLs6+',
+			'host'      => 'localhost',
+			'database'  => 'xgen',
+			'username'  => 'root',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => 'lara_',
