@@ -167,7 +167,7 @@ class Image extends Field{
         $row = $this->getRow();
         if($row)
         {
-            if($row->img_link && json_decode($row->img_link))
+            if(isset($row->img_link) && $row->img_link && json_decode($row->img_link))
             {
                 $imgs = json_decode($row->img_link);
                 return !empty($imgs);
