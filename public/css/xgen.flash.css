@@ -1,0 +1,112 @@
+.float-l
+{
+    float: left;
+}
+.float-r
+{
+    float: right;
+}
+.width-100
+{
+    width: 100%;
+}
+.width-100-l
+{
+    width: 100%;
+    float: left;
+}
+.width-100-r
+{
+    width: 100%;
+    float: right;
+}
+.width-50-l
+{
+    width: 50%;
+    float: left;
+}
+.width-50-r
+{
+    width: 50%;
+    float: right;
+}
+.width-80
+{
+    width: 80%;
+}
+.width-80-l
+{
+    width: 80%;
+    float: left;
+}
+.width-80-r
+{
+    width: 80%;
+    float: right;
+}
+.width-20-r
+{
+    width: 20%;
+    float: right;
+}
+.height-100
+{
+    height: 100%;
+}
+
+.margin-0
+{
+	margin:0px;
+}
+.margin-bottom-10
+{
+	margin-bottom:10px;
+}
+.margin-top-10
+{
+	margin-top:10px;
+}
+.margin-left-10
+{
+	margin-left:10px;
+}
+.margin-right-10
+{
+	margin-right:10px;
+}
+.margin-auto
+{
+    margin: 0 auto;
+}
+.text-c
+{
+    text-align: center;
+}
+.text-l
+{
+    text-align: left;
+}
+.text-r
+{
+    text-align: right;
+}
+
+.border-red
+{
+    border:1px solid red;
+}
+
+.border-eee
+{
+    border: 1px solid #eee;
+}
+
+.background-fff
+{
+	background-color:#FFF; 
+}
+
+.padding-10
+{
+	padding: 10px;
+}

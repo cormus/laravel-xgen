@@ -14,83 +14,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <?php
-                        /*
-                            foreach ($pages as $page)
-                            {
-                                if(is_array($page))
-                                {
-                                    
-                                }
-                                else
-                                {
-                                    echo '<pre>'; print_r($page); echo '</pre>'; die();
-                                    //mostar no menu
-                                    //mostrar no menu se estiver logado
-                                    if($page->getShowInMenu())
-                                    {
-                                        if($page->getShowInMenuIfLogged())
-                                        {
-                                            $logged = Sentry::check();
-                                        }
-                                        else
-                                        {
-                                            $logged = true;
-                                        }
-
-                                        if($logged)
-                                        {
-                                            //quando a rota é setada com parametros é necessário retirar os mesmos
-                                            $end = strpos($page->getRout(), '/');
-                                            if ($end)
-                                                $com = substr($page->getRout(), 0, $end);
-                                            else
-                                                $com = $page->getRout();
-                                            $current = (Request::is($com) || Request::is($com . '/*')) ? 'class="active"' : '';
-                                            echo '<li ' . $current . '><a href="' . URL::to($com) . '">' . $page->getTitle() . '</a></li>';
-                                        }
-                                    }
-                                }
-                            }
-                        */
-                        /*
-                        foreach ($pages as $page)
-                        {
-                            //mostar no menu
-                            //mostrar no menu se estiver logado
-                            if($page->getShowInMenu())
-                            {
-                                if($page->getShowInMenuIfLogged())
-                                {
-                                    $logged = Sentry::check();
-                                }
-                                else
-                                {
-                                    $logged = true;
-                                }
-                                
-                                if($logged)
-                                {
-                                    //quando a rota é setada com parametros é necessário retirar os mesmos
-                                    $end = strpos($page->getRout(), '/');
-                                    if ($end)
-                                        $com = substr($page->getRout(), 0, $end);
-                                    else
-                                        $com = $page->getRout();
-                                    $current = (Request::is($com) || Request::is($com . '/*')) ? 'class="active"' : '';
-                                    echo '<li ' . $current . '><a href="' . URL::to($com) . '">' . $page->getTitle() . '</a></li>';
-                                }
-                            }
-                        }
-                         */
-                        ?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                             <?php
-                            
-                                if(isset($profileLink)) echo $profileLink;
-                                
                                 foreach ($pages as $page)
                                 {
                                     //mostar no menu

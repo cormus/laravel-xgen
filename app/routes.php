@@ -1,18 +1,4 @@
 <?php
-/**
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-| 
-| http://laravel.com/docs/routing
-|
-*/
-
 // Todas as outras rotas:
 //Route::get('/login',  'AuthController@loginForm');
 //Route::post('/login', 'AuthController@login');
@@ -74,33 +60,41 @@ $myApp->addPage($page);
 $page  = new XPage();
     $page->setLoginRequired(true);
     $page->setShowInMenuIfLogged(true);
-    $page->setRout('publishing-house');
-    $page->setTitle('Editora de revistas');
+    $page->setRout('rota-exemplo');
+    $page->setTitle('Exemplo de formulário');
         $form = new XForm();
         $form->setTable('cormus_publishing_house');
-        $form->setTitle('Teste gerador');
-        $form->setSubTitle('Teste gerador');
+        $form->setTitle('Exemplo gerador');
+        $form->setSubTitle('Formulário de exemplo');
         
-        //$form->setShowBtnDelete(false);
-        //$form->setShowBtnEdit(false);
-        //$form->setShowSelectBox(false);
-        //$form->setShowBtnNewCadastre(false);
+        $form->setShowBtnDelete(true);
+        $form->setShowBtnEdit(true);
+        $form->setShowSelectBox(true);
+        $form->setShowBtnNewCadastre(true);
         
         //coloca o compo da imagem
         $field = $form->field('image');
         $field->setName('img_link');
-        $field->setTitle('Logomarca da editora');
-        $field->setPath('data/publishing_house');
-        $field->setRequired(true);
+        $field->setTitle('Imagem exemplo');
+        $field->setPath('data/img');
+        $field->setRequired(false);
         $form->addField($field);
         
         //coloca o campo de texto
         $field = $form->field('text');
         $field->setName('name');
         $field->setRequired(true);
-        $field->setTitle('Nome da editora');
+        $field->setTitle('Nome');
+        $form->addField($field);
+
+        //coloca o campo de texto
+        $field = $form->field('text');
+        $field->setName('telefone');
+        $field->setRequired(true);
+        $field->setTitle('Telefone');
         $form->addField($field);
         
+
         //coloca o campo de texto
         $field = $form->field('textarea');
         $field->setShowList(false);
@@ -111,32 +105,6 @@ $page  = new XPage();
     $page->addModule('center', $form);       
 $myApp->addPage($page);
 
-
-
-
-
-$myApp->setMenuStructure(array(
-    '/',
-    array
-    (
-        'title'  => 'Games',
-        'routes' => array
-        (
-            'games-producer',
-            'games',
-            'games_my',
-        ),
-    ),
-    array
-    (
-        'title'  => 'Consoles',
-        'routes' => array
-        (
-            'consoles-producer',
-            'consoles',
-        )
-    )
-));
 
 //coloca os módulos padrão a todas as páginas
 $headerController = new  HeaderController();

@@ -696,14 +696,11 @@ class XForm extends Eloquent
      */
     public function checkTable()
     {
-        $table = "lara_{$this->table}";
-        //http://rubsphp.blogspot.com.br/2011/04/tabelas-e-colunas-no-mysql.html
-        //SELECT * FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'nome_do_bd';
-        $rows  = DB::select("SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = '{$table}'");
+        $fields = $this->fields;
         //verifica se a tabela não existe
-        if(empty($rows))
+        if(!Schema::hasTable($this->table))
         {
-            $fields = $this->fields;
+            die('asdf');
             //http://laravel.com/docs/schema
             Schema::create($this->table, function($table) use ($fields)
             {
@@ -712,7 +709,7 @@ class XForm extends Eloquent
                     $table->increments('id');
                     foreach($fields as $field)
                     {
-                        //campos que são crados automaticamente
+                        //campos que são criados automaticamente
                         if(!in_array($field->getName(), array('id', 'created_at', 'updated_at')))
                         {
                             $table = $field->tableData($table);
@@ -720,6 +717,21 @@ class XForm extends Eloquent
                     }
                     $table->timestamps();
             });
+        }
+        else
+        {
+            //faz a verificação se todos os campos existem na tabela
+            foreach($fields as $field)
+            {
+                //echo $this->table.':'.$field->getName().'='.Schema::hasColumn($this->table, $field->getName()).'<br />';
+                if (Schema::hasColumn($this->table, $field->getName()))
+                {
+                    Schema::table($this->table, function($table) use ($field)
+                    {
+                        $table = $field->tableData($table);
+                    });
+                }
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 class MenuController extends BaseController 
 {
         public function  render($data)

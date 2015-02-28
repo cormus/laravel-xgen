@@ -5,14 +5,13 @@ class MenuModel
     public function menu($data)
     {
         $user = Sentry::getUser();
+        
         if($user)
         {
             $admin = Sentry::findGroupByName('Admins');
-            //super admin não tem pagamento
-            if(!$user->inGroup($admin))
+            if($user->inGroup($admin))
             {
-
-
+                //é administrador
             }
         }
         
@@ -21,11 +20,8 @@ class MenuModel
         {
             $data['logued']      = true;
             $data['email']       = $user->email;
-            $data['profileLink'] = '<li><a href="'.$user->profile_name.'">Perfil</a></li>';
         }
         
         return $data;
     }
 }
-
-?>

@@ -1,5 +1,4 @@
 <?php
-
 class FooterController extends BaseController 
 {
         public function  render()
