@@ -19,10 +19,12 @@ class Select  extends Field{
     var $loadList = true;
     var $options = array('Selecione uma opção');
     var $relationship = array();
+    var $query = null;
     
     public function setTable($data) 
     {
         $this->table = $data;
+        $this->query = DB::table($this->gettable());
     }
     public function getTable() 
     {
@@ -81,6 +83,19 @@ class Select  extends Field{
         $this->relationsphip = array('table' => $table, 'id_camp' => $id_camp, 'camp' => $camp, 'relationship' => $relationship);
     }
     
+    
+    public function setQuery($data)
+    {
+        $this->query = $data;
+    }
+    public function getQuery()
+    {
+        if(!$this->query)
+            $this->query = DB::table($this->gettable());
+        
+        return $this->query;
+    }
+    
     public function render($row)
     {
         $option = $this->option;
@@ -89,7 +104,7 @@ class Select  extends Field{
         
         if($this->gettable() && ($this->getLoadList() || $row))
         {
-            $values    = DB::table($this->gettable())->select($option, $column)->get();
+            $values  = $this->getQuery()->select($option, $column)->get();
             //organiza os dados no formato do select laravel
             foreach($values as $value)
             {
@@ -136,7 +151,7 @@ class Select  extends Field{
         //verifica se não foi add valors diretamente
         if(count($options) == 1)
         {
-            $row  = DB::table($this->gettable())->select($this->column)->where($this->option, '=', $row->$name)->first();
+            $row  = $this->getQuery()->select($this->column)->where($this->option, '=', $row->$name)->first();
             if($row)
             {
                 $name = $this->column;
@@ -165,7 +180,7 @@ class Select  extends Field{
         
         if($this->gettable())
         {
-            $values    = DB::table($this->gettable())->select($option, $column)->get();
+            $values    = $this->getQuery()->select($option, $column)->get();
             //organiza os dados no formato do select laravel
             foreach($values as $value)
             {
