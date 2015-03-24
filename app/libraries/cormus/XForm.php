@@ -90,6 +90,8 @@ class XForm extends Eloquent
     var $showSelectBox = true;
     
     var $order = array('camp' => 'id', 'order' => 'desc');
+	
+	var $queryList = null;
     
     /**
      * Condições extras para a listagem de dados
@@ -278,7 +280,19 @@ class XForm extends Eloquent
     {
         return $this->order;
     }
-
+    
+    public function setQueryList($data)
+    {
+        $this->queryList = $data;
+    }
+    public function getQueryList()
+    {
+        if(!$this->queryList)
+            $this->queryList = DB::table($this->gettable());
+        
+        return $this->queryList ;
+    }
+	
     /**
      * Faz o carregamento de um field próprio do sistema ou que foi criado pelo usuário
      * 
@@ -504,7 +518,7 @@ class XForm extends Eloquent
             }
         }
         
-        $table = DB::table($this->table);
+       $table = $this->getQueryList();
 		
         //quando o usuário add mais condições para filtrar a listagem
         foreach($this->getExtraWhere() as $condition)
