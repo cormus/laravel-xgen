@@ -700,7 +700,6 @@ class XForm extends Eloquent
         //verifica se a tabela não existe
         if(!Schema::hasTable($this->table))
         {
-            die('asdf');
             //http://laravel.com/docs/schema
             Schema::create($this->table, function($table) use ($fields)
             {
