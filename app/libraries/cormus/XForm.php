@@ -92,7 +92,9 @@ class XForm extends Eloquent
     var $order = array('camp' => 'id', 'order' => 'desc');
 	
 	var $queryList = null;
-    
+	
+	 var $runAfterSaving = null;
+	 
     /**
      * Condições extras para a listagem de dados
      *
@@ -293,6 +295,12 @@ class XForm extends Eloquent
         return $this->queryList ;
     }
 	
+	public function runAfterSaving($data)
+    {
+    	$this->runAfterSaving = $data;
+    }
+
+	
     /**
      * Faz o carregamento de um field próprio do sistema ou que foi criado pelo usuário
      * 
@@ -410,6 +418,12 @@ class XForm extends Eloquent
                 {
                     $updates['updated_at'] = date('Y-m-d H:i:s');
                     $return = $db->where('id', $id)->update($updates);
+					
+					if($this->runAfterSaving != null)
+                    {
+                    	$runAfterSaving = $this->runAfterSaving;
+                    	$runAfterSaving($id);
+                    }
                 }
                 else
                 {
@@ -420,6 +434,11 @@ class XForm extends Eloquent
                     //quando salva um novo registro muda a URL para a id inserida
                     if($return)
                     {
+						if($this->runAfterSaving != null)
+						{
+							$runAfterSaving = $this->runAfterSaving;
+							$runAfterSaving($id);
+						}
                          header("Location:".URL::to(Request::url().'/?id='.$return.'&save=1'));
                          exit();
                     }
