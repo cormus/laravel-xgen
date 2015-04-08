@@ -477,7 +477,7 @@ class XForm extends Eloquent
         else
             $url = Request::url().'?id='.$id;
         
-        $html  = '<div class="container marketing">';
+        $html  = '<div class="width-100-l marketing">';
         $html .= '<div class="page-title pull-left width-100">
                     <h1 class="pull-left">'.$this->title.'<br /><small>'.$this->getSubTitle().'</small></h1>
                   </div>';
@@ -600,7 +600,7 @@ class XForm extends Eloquent
             $url = Request::url();
 		
         $html  = Form::open(array('url' => $url, 'name' => 'select-form'));
-        $html .= '<div class="container marketing">
+        $html .= '<div class="width-100-l marketing">
                     <div class="page-title pull-left width-100">
                         <div class="row">
                             <div class="col-md-8"> 
