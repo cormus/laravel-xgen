@@ -88,7 +88,7 @@ class XApp {
 					$controller .= '		{'."\n";
 					$controller .= '			$'.$modelName.' =  new '.$modelName.'();'."\n";
 					$controller .= '			$data = $'.$modelName.'->render();'."\n";
-					$controller .= '			return View::make(\''.$rout.'\', $data);'."\n";
+					$controller .= '			return View::make(\'app.'.$rout.'\', $data);'."\n";
 					$controller .= '		}'."\n";
 					$controller .= '}'."\n";
 																				  

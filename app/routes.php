@@ -54,6 +54,18 @@ $myApp->addPage($page);
 
 
 
+$page  = new XPage();
+    $page->setLoginRequired(false);
+    $page->setShowInMenuIfLogged(false);
+    $page->setRout('minha-pagina');
+    $page->setTitle('Minha Página');
+	$page->setCreateControl(true);
+	$page->setCreateModel(true);
+	$page->setCreateView(true);
+		$minhaPaginaController = new MinhaPaginaController();
+    $page->addModule('center', $minhaPaginaController);       
+$myApp->addPage($page);
+
 
 
 
@@ -62,9 +74,9 @@ $page  = new XPage();
     $page->setShowInMenuIfLogged(true);
     $page->setRout('rota-exemplo');
     $page->setTitle('Exemplo de formulário');
-	$page->setCreateControl(true);
-	$page->setCreateModel(true);
-	$page->setCreateView(true);
+	$page->setCreateControl(false);
+	$page->setCreateModel(false);
+	$page->setCreateView(false);
         $form = new XForm();
         $form->setTable('cormus_publishing_house');
         $form->setTitle('Exemplo gerador');

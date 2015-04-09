@@ -150,17 +150,26 @@ class XPage {
                 if (!isset($positions[$position]))
                     $positions[$position] = '';
 
-                $reflectionClass = new ReflectionMethod(get_class($module), 'render');
-                $numParam = $reflectionClass->getNumberOfRequiredParameters();
-
-                if($numParam)
-                {
-                    $positions[$position] .= $module->render($this->getParam());
-                }
-                else
-                {
-                    $positions[$position] .= $module->render();
-                }
+				if(is_object($module))
+				{
+					$reflectionClass = new ReflectionMethod(get_class($module), 'render');
+                	$numParam = $reflectionClass->getNumberOfRequiredParameters();
+					
+					if($numParam)
+					{
+						$html = $module->render($this->getParam());
+					}
+					else
+					{
+						$html = $module->render();
+					}
+				}
+				else
+				{
+					$html = $module;
+				}
+				
+                $positions[$position] .= $html;
             }
         }
         return View::make('layouts.default', $positions);

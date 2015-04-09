@@ -1,5 +1,5 @@
 <?php
-class RotaExemploModel extends Eloquent 
+class MinhaPaginaModel extends Eloquent 
 {
 		public function render()
 		{
