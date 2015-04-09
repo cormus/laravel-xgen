@@ -24,7 +24,7 @@ class XApp {
     {
         return $this->title;
     }
-   
+	
     public function getPages()
     {
         return $this->pages;
@@ -61,6 +61,79 @@ class XApp {
             //coloca os módulos comuns a todas as páginas página
             if(!empty($this->defullModules))
                 $page->addModules($this->defullModules);
+			
+			if($page->getCreateControl() || $page->getCreateModel() || $page->getCreateView())
+			{
+				$rout = $page->getRout();
+				//remove os caracteres de separação da rota
+				$rout = str_replace(array('-', '_'), ' ', $rout);
+				//coloca as primeiras letras de cada palavra em maiúscula
+				$rout = ucwords($rout);
+				//remove os espaços
+				$rout = str_replace(' ', '', $rout);
+				//monta o nome do controller
+				$controlName = $rout.'Controller';
+				$controlPath = '../app/controllers/'.$controlName.'.php';
+				$modelName   = $rout.'Model';
+				$modelPath   = '../app/models/'.$modelName.'.php';
+				$viewName    = $rout;
+				$viewPath    = '../app/views/app/'.$viewName.'.blade.php';
+				
+				if($page->getCreateControl() && !file_exists($controlPath))
+				{
+					$controller  = '<?php'."\n";
+					$controller .= 'class '.$controlName.' extends BaseController'."\n";
+					$controller .= '{'."\n";
+					$controller .= '		public function  render()'."\n";
+					$controller .= '		{'."\n";
+					$controller .= '			$'.$modelName.' =  new '.$modelName.'();'."\n";
+					$controller .= '			$data = $'.$modelName.'->render();'."\n";
+					$controller .= '			return View::make(\''.$rout.'\', $data);'."\n";
+					$controller .= '		}'."\n";
+					$controller .= '}'."\n";
+																				  
+					// Abre ou cria o arquivo
+					// "a" representa que o arquivo é aberto para ser escrito
+					$fp = fopen($controlPath, "a");
+					// Escreve "exemplo de escrita" no bloco1.txt
+					$escreve = fwrite($fp, $controller);
+					// Fecha o arquivo
+					fclose($fp);
+				}
+				
+				if($page->getCreateModel() && !file_exists($modelPath))
+				{
+					$model  = '<?php'."\n";
+					$model .= 'class '.$modelName.' extends Eloquent '."\n";
+					$model .= '{'."\n";
+					$model .= '		public function render()'."\n";
+					$model .= '		{'."\n";
+					$model .= '			return array();'."\n";
+					$model .= '		}'."\n";
+					$model .= '}'."\n";
+																				  
+					// Abre ou cria o arquivo
+					// "a" representa que o arquivo é aberto para ser escrito
+					$fp = fopen($modelPath, "a");
+					// Escreve "exemplo de escrita" no bloco1.txt
+					$escreve = fwrite($fp, $model);
+					// Fecha o arquivo
+					fclose($fp);
+				}
+				
+				if($page->getCreateView() && !file_exists($viewPath))
+				{
+					$view  = $viewName;
+																				  
+					// Abre ou cria o arquivo
+					// "a" representa que o arquivo é aberto para ser escrito
+					$fp = fopen($viewPath, "a");
+					// Escreve "exemplo de escrita" no bloco1.txt
+					$escreve = fwrite($fp, $view);
+					// Fecha o arquivo
+					fclose($fp);
+				}
+			}
             
             //verifica se é necessário estar logado para ter acesso a a essa página
             if($page->getLoginRequired())

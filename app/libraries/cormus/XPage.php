@@ -11,12 +11,42 @@ class XPage {
 
     var $rout;
     var $title;
+	var $createcontrol = false;
+	var $createModel   = false;
+	var $createView    = false;
     var $modules = array();
     var $param = array();
     var $loginRequired = false;
     var $showInMenu = true;
     var $showInMenuIfLogged = false;
 
+    public function setCreateControl($data)
+    {
+        $this->createcontrol = $data;
+    }
+    public function getCreateControl()
+    {
+        return $this->createcontrol;
+    }
+	
+    public function setCreateModel($data)
+    {
+        $this->createModel = $data;
+    }
+    public function getCreateModel()
+    {
+        return $this->createModel;
+    }
+	
+	public function setCreateView($data)
+    {
+        $this->createView = $data;
+    }
+    public function getCreateView()
+    {
+        return $this->createView;
+    }
+	
     public function setParam($data)
     {
         $this->param = $data;

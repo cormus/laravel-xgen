@@ -7,5 +7,3 @@ class HomeModel
         return array();
     }
 }
-
-?>
