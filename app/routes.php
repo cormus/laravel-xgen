@@ -62,8 +62,9 @@ $page  = new XPage();
 	$page->setCreateControl(true);
 	$page->setCreateModel(true);
 	$page->setCreateView(true);
-		$minhaPaginaController = new MinhaPaginaController();
-    $page->addModule('center', $minhaPaginaController);       
+		//ao executar a primeira vez o controle, o model e a view ainda não foram criados. Na segunda execução pode remover os comentários
+		//$minhaPaginaController = new MinhaPaginaController();
+    //$page->addModule('center', $minhaPaginaController);       
 $myApp->addPage($page);
 
 
