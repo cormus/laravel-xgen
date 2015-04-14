@@ -41,7 +41,7 @@ class AuthController extends BaseController {
 	public function login()
 	{
                 $message    = '';
-		$rememberMe = false;
+				$rememberMe = false;
                 
                 if(Input::get('remember_me'))
                     $rememberMe = true;
@@ -101,7 +101,7 @@ class AuthController extends BaseController {
                     exit();
                 }
                 
-                return View::make('login.login', array('message' => $message, 'email' => $userEmail, 'password' => $userPassword, 'remember_me' => $rememberMe));
+                return View::make('adm.login.login', array('message' => $message, 'email' => $userEmail, 'password' => $userPassword, 'remember_me' => $rememberMe));
 	}
 
 	
@@ -158,7 +158,7 @@ class AuthController extends BaseController {
                     }
                 }
             }
-            return View::make('login.recover', array('message' => $message, 'email' => $email));
+            return View::make('adm.login.recover', array('message' => $message, 'email' => $email));
         }
         
         public function passwordReset($token)
@@ -189,7 +189,7 @@ class AuthController extends BaseController {
                     }
                 }
                 return View::make(
-                    'layouts.passwordrecover',
+                    'adm.layouts.recover',
                     array(
                         'header' => $headerController->header(),
                         'footer' => $FooterController->footer(),
@@ -202,7 +202,7 @@ class AuthController extends BaseController {
             catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
             {
                 return View::make(
-                    'layouts.login',
+                    'adm.layouts.login',
                     array(
                         'header' => $headerController->header(),
                         'footer' => $FooterController->footer(),

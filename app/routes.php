@@ -26,8 +26,9 @@ $page  = new XPage();
     $page->setShowInMenu(false);
     $page->setRout('/login/{action?}');
     $page->setTitle('login');
-    $homeController = new AuthController();
-    $page->addModule('center', $homeController);
+	$page->setLayout('adm.layouts.login');
+    $authController = new AuthController();
+    $page->addModule('center', $authController);
 $myApp->addPage($page);
 
 
@@ -103,6 +104,13 @@ $page  = new XPage();
         $field->setTitle('Nome');
         $form->addField($field);
 
+		//coloca o campo de texto
+        $field = $form->field('text');
+        $field->setName('name2');
+        $field->setRequired(true);
+        $field->setTitle('Nome2');
+        $form->addField($field);
+
         //coloca o campo de texto
         $field = $form->field('text');
         $field->setName('telefone');
@@ -121,17 +129,20 @@ $page  = new XPage();
     $page->addModule('center', $form);       
 $myApp->addPage($page);
 
-
 //coloca os módulos padrão a todas as páginas
 $headerController = new  HeaderController();
-$FooterController = new  FooterController();
 $MenuController   = new  MenuController();
-$myApp->addDefullModules(array(
-    'header' => $headerController->render(),
-    'footer' => $FooterController->render(),
-    'menu'   => $MenuController->render(array('projectName' => $myApp->getTitle(), 'pages' => $myApp->getPages()))
+$myApp->addDefullModules('adm.layouts.default', array(
+    'header'   => $headerController->render(),
+    'menu'     => $MenuController->render(array('projectName'   => $myApp->getTitle(), 'pages' => $myApp->getPages())),
+    'menuLeft' => $MenuController->menuLeft(array('projectName' => $myApp->getTitle(), 'pages' => $myApp->getPages()))
 ));
 
+$myApp->addDefullModules('adm.layouts.login', array(
+    'header'   => $headerController->render(),
+    'menu'     => $MenuController->render(array('projectName'   => $myApp->getTitle(), 'pages' => $myApp->getPages())),
+    'menuLeft' => $MenuController->menuLeft(array('projectName' => $myApp->getTitle(), 'pages' => $myApp->getPages()))
+));
 
 //executa o aplicativo
 $myApp->run();

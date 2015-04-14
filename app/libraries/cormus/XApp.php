@@ -35,9 +35,9 @@ class XApp {
         $this->pages[] = $page;
     }
     
-    public function addDefullModules(Array $data)
+    public function addDefullModules($layout, Array $data)
     {
-        $this->defullModules = $data;
+        $this->defullModules[$layout] = $data;
     }
     
     /**
@@ -59,8 +59,11 @@ class XApp {
         foreach($this->getPages() as $page)
         {
             //coloca os módulos comuns a todas as páginas página
-            if(!empty($this->defullModules))
-                $page->addModules($this->defullModules);
+			if(isset($this->defullModules[$page->getLayout()]) && !empty($this->defullModules))
+			{
+				$page->addModules($this->defullModules[$page->getLayout()]);
+			}
+			
 			
 			if($page->getCreateControl() || $page->getCreateModel() || $page->getCreateView())
 			{

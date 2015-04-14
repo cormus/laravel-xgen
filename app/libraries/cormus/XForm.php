@@ -729,11 +729,12 @@ class XForm extends Eloquent
      */
     public function checkTable()
     {
+		//http://laravel.com/docs/schema
         $fields = $this->fields;
         //verifica se a tabela não existe
         if(!Schema::hasTable($this->table))
         {
-            //http://laravel.com/docs/schema
+			//se a tabela não existir ela é criada
             Schema::create($this->table, function($table) use ($fields)
             {
                     //$table->integer('chapter_id');
@@ -752,12 +753,13 @@ class XForm extends Eloquent
         }
         else
         {
-            //faz a verificação se todos os campos existem na tabela
+            //se a tabela existir é feita a verificação se todos os campos existem na tabela
             foreach($fields as $field)
-            {
-                //echo $this->table.':'.$field->getName().'='.Schema::hasColumn($this->table, $field->getName()).'<br />';
-                if (Schema::hasColumn($this->table, $field->getName()))
+			{
+				//verifica se a coluna existe na tabela
+                if(!Schema::hasColumn(Config::get('database.connections.mysql.prefix').$this->table, $field->getName()))
                 {
+					//se não existir a coluna é criada
                     Schema::table($this->table, function($table) use ($field)
                     {
                         $table = $field->tableData($table);

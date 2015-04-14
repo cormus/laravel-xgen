@@ -6,6 +6,6 @@ class HomeController extends BaseController
         {
             $homeModel =  new HomeModel();
             $data        =  $homeModel->home();
-            return View::make('home.home', $data);
+            return View::make('app.home', $data);
         }
 }

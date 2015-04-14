@@ -6,6 +6,6 @@ class HeaderController extends BaseController
         {
             $headerModel =  new HeaderModel();
             $data        =  $headerModel->standard();
-            return View::make('header', $data);
+            return View::make('adm.header', $data);
         }
 }

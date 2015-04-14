@@ -11,6 +11,7 @@ class XPage {
 
     var $rout;
     var $title;
+	var $layout = 'adm.layouts.default';
 	var $createcontrol = false;
 	var $createModel   = false;
 	var $createView    = false;
@@ -79,6 +80,18 @@ class XPage {
     {
 
         return $this->title;
+    }
+	
+    public function setLayout($data)
+    {
+
+        $this->layout = $data;
+    }
+
+    public function getLayout()
+    {
+
+        return $this->layout;
     }
 
     public function setLoginRequired($data)
@@ -172,7 +185,7 @@ class XPage {
                 $positions[$position] .= $html;
             }
         }
-        return View::make('layouts.default', $positions);
+        return View::make($this->getLayout(), $positions);
     }
 }
 
