@@ -10,7 +10,7 @@
    <link href="{{ asset('bawer/font-awesome-4.3.0/css/font-awesome.min.css') }}" rel="stylesheet">
     
     <!-- Bootstrap core CSS -->
-    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bawer/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Custom styles for this template -->
     <!-- <link href="{{ asset('bootstrap/css/carousel.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('css/xgen.flash.css') }}" rel="stylesheet">
@@ -21,8 +21,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="{{ asset('js/jquery.maskMoney.js') }}"></script>
     <script src="{{ asset('js/jquery.maskedinput.js') }}"></script>
-    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bootstrap/js/docs.min.js') }}"></script>
+    <script src="{{ asset('bawer/tinymce_4.1.9/tinymce.min.js') }}"></script>
+    <script src="{{ asset('bawer/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bawer/bootstrap/js/docs.min.js') }}"></script>
     <script src="{{ asset('js/xgen.js') }}"></script>
     <!--js do app-->
     <script src="{{ asset('js/app.js') }}"></script>
