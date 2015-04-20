@@ -96,6 +96,36 @@ function limpaCampo(object)
  		$('.'+className).hide();
  	}
  }
+ 
+ 
+function tinyMCE
+(
+	 tinymce.init({
+		selector: ".tinyMCE",
+		theme: "modern",
+		width: 680,
+		height: 300,
+		link_list: [
+			{title: 'My page 1', value: 'http://www.tinymce.com'},
+			{title: 'My page 2', value: 'http://www.tecrail.com'}
+		],
+		plugins: [
+			 "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+			 "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking spellchecker",
+			 "table contextmenu directionality emoticons paste textcolor responsivefilemanager"
+	   ],
+		relative_urls: false,
+		browser_spellcheck : true ,
+		filemanager_title:"Responsive Filemanager",
+		external_filemanager_path:"bawer/tinymce_4.1.9/plugins/filemanager/",
+		external_plugins: { "filemanager" : "plugins/filemanager/plugin.min.js"},
+	  
+	   image_advtab: true,
+	   toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
+	   toolbar2: "| responsivefilemanager | image | media | link unlink anchor | print preview code  | forecolor backcolor"
+	 });
+)
+ 
 
 
 $(function(){
