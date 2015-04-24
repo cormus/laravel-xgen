@@ -45,6 +45,11 @@ define('USE_ACCESS_KEYS', false); // TRUE or FALSE
 |    |   |   |   |   |- plugin.min.js
 */
 
+$dir = str_replace('bawer/tinymce_4.1.9/plugins/filemanager/config', '', dirname(__FILE__));
+$url = dirname($_SERVER['HTTP_REFERER']);
+//echo '<pre>';
+//print_r(dirname($_SERVER['HTTP_REFERER']));
+//echo '</pre>';
 $config = array(
 
 	/*
@@ -57,7 +62,8 @@ $config = array(
 	*/
 
 	//'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
-	'base_url' => 'tinymce_4.1.9/plugins/filemanager',
+	//'base_url' => 'tinymce_4.1.9/plugins/filemanager',
+	'base_url'   => 'https://stoledo.no-ip.org:6081/alex/projetos/laravel-xgen/public/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +73,7 @@ $config = array(
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/source/',
+	'upload_dir' => 'data/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -77,7 +83,8 @@ $config = array(
 	| with final /
 	|
 	*/
-	'current_path' => 'source/',
+	//'current_path' => 'source/',
+	'current_path' => $dir.'/data/',
 
 	/*
 	|--------------------------------------------------------------------------

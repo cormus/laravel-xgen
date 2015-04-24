@@ -111,6 +111,13 @@ $page  = new XPage();
         $field->setTitle('Nome2');
         $form->addField($field);
 
+		//coloca o campo de texto
+        $field = $form->field('editor');
+        $field->setName('name2');
+        $field->setRequired(true);
+        $field->setTitle('Editor');
+        $form->addField($field);
+
         //coloca o campo de texto
         $field = $form->field('text');
         $field->setName('telefone');
