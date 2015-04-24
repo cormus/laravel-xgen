@@ -40,14 +40,14 @@ class Editor extends Field{
                     '.Form::label($this->getName(), $this->getTitle())
                      .$required
                      .$subTitle
-                     .Form::textarea($this->getName(), $this->getValue(),  array('class' => 'form-control tinyMCE width-100-l', 'id' => $this->getName(), 'placeholder' => '')).'
+                     .Form::textarea($this->getName(), $this->getValue(),  array('class' => 'form-control tinyMCE tinymce-editor', 'id' => $this->getName(), 'placeholder' => '')).'
                  </div>';
 		
 		$html .= '<!-- Place inside the <head> of your HTML -->
 					<script type="text/javascript" src="bawer/tinymce_4.1.9/tinymce.min.js"></script>
 					<script type="text/javascript">
 						 tinymce.init({
-							selector: "textarea",
+							selector: ".tinymce-editor",
 							theme: "modern",
 							width: "100%",
 							height: "300",
