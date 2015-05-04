@@ -56,9 +56,9 @@ class Imagebox extends Field{
                     '.Form::label($this->getName(), $this->getTitle())
                      .$required
                      .$subTitle
-                     .Form::text($this->getName(), $value,  array('id' => $this->getName(), 'type' => 'hidden')).'
-					 <input id="'.$this->getName().'-url" type="hidden"/>
-					 '.$html.'
+                     .'<input id="'.$this->getName().'"     type="hidden"  value="'.$value.'" id="'.$this->getName().'"/>
+					   <input  id="'.$this->getName().'-url" type="hidden"/>
+					   <div class="width-100-l">'.$html.'</div>
                 </div>
 				
 				<div id="'.$this->getName().'-imgs"></div>
