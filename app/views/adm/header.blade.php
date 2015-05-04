@@ -1,4 +1,4 @@
-<meta charset="utf-8">
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -24,6 +24,10 @@
     <script src="{{ asset('bawer/tinymce_4.1.9/tinymce.min.js') }}"></script>
     <script src="{{ asset('bawer/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('bawer/bootstrap/js/docs.min.js') }}"></script>
+    <!--códigos do fancybox-->
+    <script src="{{ asset('bawer/fancybox/source/jquery.fancybox.js?v=2.1.5') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bawer/fancybox/source/jquery.fancybox.css?v=2.1.5') }}" media="screen" />
+    <!--js do Xgen-->
     <script src="{{ asset('js/xgen.js') }}"></script>
     <!--js do app-->
     <script src="{{ asset('js/app.js') }}"></script>

@@ -88,27 +88,12 @@ $page  = new XPage();
         $form->setShowBtnEdit(true);
         $form->setShowSelectBox(true);
         $form->setShowBtnNewCadastre(true);
-        
-        //coloca o compo da imagem
-        $field = $form->field('image');
-        $field->setName('img_link');
-        $field->setTitle('Imagem exemplo');
-        $field->setPath('data/img');
-        $field->setRequired(false);
-        $form->addField($field);
-        
-        //coloca o campo de texto
-        $field = $form->field('text');
-        $field->setName('name');
-        $field->setRequired(true);
-        $field->setTitle('Nome');
-        $form->addField($field);
-
+       
 		//coloca o campo de texto
-        $field = $form->field('text');
-        $field->setName('name2');
+        $field = $form->field('Imagebox');
+        $field->setName('name1');
         $field->setRequired(true);
-        $field->setTitle('Nome2');
+        $field->setTitle('Imagebox');
         $form->addField($field);
 
 		//coloca o campo de texto
@@ -118,20 +103,6 @@ $page  = new XPage();
         $field->setTitle('Editor');
         $form->addField($field);
 
-        //coloca o campo de texto
-        $field = $form->field('text');
-        $field->setName('telefone');
-        $field->setRequired(true);
-        $field->setTitle('Telefone');
-        $form->addField($field);
-        
-
-        //coloca o campo de texto
-        $field = $form->field('textarea');
-        $field->setShowList(false);
-        $field->setName('history');
-        $field->setTitle('História');
-        $form->addField($field);
         
     $page->addModule('center', $form);       
 $myApp->addPage($page);
