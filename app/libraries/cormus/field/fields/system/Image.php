@@ -89,7 +89,7 @@ class Image extends Field{
             );
 
             //verifica se existe erro no envio das imagens
-            foreach($_FILES['img_link']['error'] as $error)
+            foreach($_FILES[$this->getName()]['error'] as $error)
             {
                 if($error)
                 {
