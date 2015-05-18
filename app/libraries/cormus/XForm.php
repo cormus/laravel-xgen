@@ -362,90 +362,93 @@ class XForm extends Eloquent
         {
             $updates = array();
             foreach($this->fields as $field)
-            {
-                $field->setRow($row);
-                $name  = $field->getName();
-                $value = $field->loadValue();
-                
-                //verifica se esse campo não admite valores duplicados
-                if($field->getUnique())
-                {
-                    $unique = $field->getUnique();
-                    $dbUnique = DB::table($this->table);
-                    //condição padrão é o valor que o usuãrio cadastrou
-                    $dbUnique->where($name, '=', $value);
-                    //condições extram para saber se o campo é único. Muito usado para verificar se o usuário esta logado
-                    foreach ($unique['condition'] as $condition)
-                    {
-                        //$dbUnique->where('id', '=', 1);
-                        $dbUnique->where($condition[0], $condition[1], $condition[2]);
-                    }
-                    $numb = $dbUnique->count();
-                    if($numb)
-                    {
-                        $return  = 3;
-                        $message = $field->getTitle();
-                    }
-                }
-                //verifica se o campo é obrigatório e foi preenchido
-                if($field->getRequired() && !$field->requiredFieldIsValid())
-                {
-                    $return = 2;
-                }
-                
-                //verifica se existe o método run, esse método é executado de forma automática caso ele exista
-                if(method_exists($field,'run'))
-                {
-                    $value = $field->run();
-                    //caso o método run retorne alguma coisa, salva no banco de dados
-                    if($value)
-                        $updates[$name] = $value;
-                }
-                //alguns fields não podem ser atualizados na tabela
-                else if(!in_array(get_class($field), array('Image', 'Checkbox')))
-                {
-                    $updates[$name] = $value;
-                }
-            }
-            
-            //só salva se todos os campos obrigatórios foram preenchidos
-            if($return < 2)
-            {
-                $db = DB::table($this->table);
-                //se exitir uma ID atualiza
-                //se não realiza um novo cadastro
-                if($id)
-                {
-                    $updates['updated_at'] = date('Y-m-d H:i:s');
-                    $return = $db->where('id', $id)->update($updates);
-					
-					if($this->runAfterSaving != null)
-                    {
-                    	$runAfterSaving = $this->runAfterSaving;
-                    	$runAfterSaving($id);
-                    }
-                }
-                else
-                {
-                    $updates['created_at'] = date('Y-m-d H:i:s');
-                    $updates['updated_at'] = date('Y-m-d H:i:s');
-					
-                    $return = $db->insertGetId($updates);
-                    //quando salva um novo registro muda a URL para a id inserida
-                    if($return)
-                    {
+			{
+					if($field->getName())
+					{
+					$field->setRow($row);
+					$name  = $field->getName();
+					$value = $field->loadValue();
+
+					//verifica se esse campo não admite valores duplicados
+					if($field->getUnique())
+					{
+						$unique = $field->getUnique();
+						$dbUnique = DB::table($this->table);
+						//condição padrão é o valor que o usuãrio cadastrou
+						$dbUnique->where($name, '=', $value);
+						//condições extram para saber se o campo é único. Muito usado para verificar se o usuário esta logado
+						foreach ($unique['condition'] as $condition)
+						{
+							//$dbUnique->where('id', '=', 1);
+							$dbUnique->where($condition[0], $condition[1], $condition[2]);
+						}
+						$numb = $dbUnique->count();
+						if($numb)
+						{
+							$return  = 3;
+							$message = $field->getTitle();
+						}
+					}
+					//verifica se o campo é obrigatório e foi preenchido
+					if($field->getRequired() && !$field->requiredFieldIsValid())
+					{
+						$return = 2;
+					}
+
+					//verifica se existe o método run, esse método é executado de forma automática caso ele exista
+					if(method_exists($field,'run'))
+					{
+						$value = $field->run();
+						//caso o método run retorne alguma coisa, salva no banco de dados
+						if($value)
+							$updates[$name] = $value;
+					}
+					//alguns fields não podem ser atualizados na tabela
+					else if(!in_array(get_class($field), array('Image', 'Checkbox')))
+					{
+						$updates[$name] = $value;
+					}
+				}
+
+				//só salva se todos os campos obrigatórios foram preenchidos
+				if($return < 2)
+				{
+					$db = DB::table($this->table);
+					//se exitir uma ID atualiza
+					//se não realiza um novo cadastro
+					if($id)
+					{
+						$updates['updated_at'] = date('Y-m-d H:i:s');
+						$return = $db->where('id', $id)->update($updates);
+
 						if($this->runAfterSaving != null)
 						{
 							$runAfterSaving = $this->runAfterSaving;
 							$runAfterSaving($id);
 						}
-                         header("Location:".URL::to(Request::url().'/?id='.$return.'&save=1'));
-                         exit();
-                    }
-                }
-            }
-            
-            $row = (object) $updates;
+					}
+					else
+					{
+						$updates['created_at'] = date('Y-m-d H:i:s');
+						$updates['updated_at'] = date('Y-m-d H:i:s');
+
+						$return = $db->insertGetId($updates);
+						//quando salva um novo registro muda a URL para a id inserida
+						if($return)
+						{
+							if($this->runAfterSaving != null)
+							{
+								$runAfterSaving = $this->runAfterSaving;
+								$runAfterSaving($id);
+							}
+							 header("Location:".URL::to(Request::url().'/?id='.$return.'&save=1'));
+							 exit();
+						}
+					}
+				}
+
+				$row = (object) $updates;
+			}
         }
         
         //mensagem de status

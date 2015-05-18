@@ -13,7 +13,14 @@
  */
 class Line extends Field
 {
-    public function render()
+	var $showList = false;
+	
+	public function tableData($data)
+	{
+		
+	}
+	
+    public function render($row)
     {
         $html = '<h1>'.$this->getTitle().'</h1>';
 		if($this->getSubTitle())  
