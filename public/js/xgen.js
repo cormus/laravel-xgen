@@ -144,7 +144,7 @@ $(function(){
         $('select[name='+field+']').html('<option value="0">Carregando...</option>');
 
         $.post( 
-            baseURL+'ajax/relationship', 
+            baseURL+'/ajax/relationship', 
             {
               id:$(this).val(),
               id_camp:$(this).attr('id_camp'),
