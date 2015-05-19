@@ -11,6 +11,7 @@ class XPage {
 
     var $rout;
     var $title;
+    var $ico = null;
 	var $layout = 'adm.layouts.default';
 	var $createcontrol = false;
 	var $createModel   = false;
@@ -80,6 +81,18 @@ class XPage {
     {
 
         return $this->title;
+    }
+	
+    public function setIco($data)
+    {
+
+        $this->ico = $data;
+    }
+
+    public function getIco()
+    {
+
+        return $this->ico;
     }
 	
     public function setLayout($data)

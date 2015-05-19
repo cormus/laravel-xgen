@@ -30,7 +30,7 @@ class Monetary extends Field{
     
     public function tableData($table)
     {
-        $table->integer($this->getName(), $this->getSize());
+        $table->double($this->getName());
         return $table;
     }
     

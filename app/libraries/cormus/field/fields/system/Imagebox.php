@@ -14,7 +14,8 @@
 class Imagebox extends Field{
     
    
-
+	var $path = null;
+	
     public function tableData($table)
     {
         $table->text($this->getName());

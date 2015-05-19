@@ -98,8 +98,8 @@ function limpaCampo(object)
  }
  
  
-function tinyMCE
-(
+function tinyMCE()
+{
 	 tinymce.init({
 		selector: ".tinyMCE",
 		theme: "modern",
@@ -124,7 +124,7 @@ function tinyMCE
 	   toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
 	   toolbar2: "| responsivefilemanager | image | media | link unlink anchor | print preview code  | forecolor backcolor"
 	 });
-)
+}
  
 
 
@@ -144,7 +144,7 @@ $(function(){
         $('select[name='+field+']').html('<option value="0">Carregando...</option>');
 
         $.post( 
-            '{{ URL::to("ajax/relationship") }}', 
+            baseURL+'ajax/relationship', 
             {
               id:$(this).val(),
               id_camp:$(this).attr('id_camp'),
@@ -165,7 +165,7 @@ $(function(){
 
     //funçao para ativar os filtros do sistema de listagem
     $('.form-filter').change(function(){
-        location.href = '{{ Request::url() }}?'+filterUrl();
+        location.href = baseRequest+'?'+filterUrl();
     });
 
     $('#btn-search').click( function (){
@@ -174,7 +174,7 @@ $(function(){
             url = 'search='+$('input[name=search]').val();
             if(filterUrl())
                 url += '&'+filterUrl();
-            location.href = '{{ Request::url() }}?'+url;
+            location.href = baseRequest+url;
         }
         else
         {

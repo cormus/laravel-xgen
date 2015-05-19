@@ -22,7 +22,7 @@ class Int extends Field{
     
     public function tableData($table)
     {
-        $table->integer($this->getName(), $this->getSize());
+        $table->integer($this->getName());
         return $table;
     }
     

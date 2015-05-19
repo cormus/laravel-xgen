@@ -11,6 +11,5 @@ function App()
     {
         alert('Teste ok');
     }
-    
 }
 var app = new App();

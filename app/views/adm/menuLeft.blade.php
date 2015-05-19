@@ -24,7 +24,7 @@
 	?>
 					<li>
 						<a href="{{ URL::to($com) }}">
-							<i class="fa fa-info-circle"></i>
+							<i class="fa {{ $page->getIco() }}"></i>
 							<span class="title">{{ $page->getTitle() }}</span>
 						</a>
 					</li>

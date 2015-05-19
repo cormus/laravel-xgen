@@ -12,7 +12,7 @@
                 </div>
                 <div class="form-group">
                     {{ Form::label('password', 'Senha') }}
-                    {{ Form::text('password', $password,  array('class' => 'form-control', 'id' => 'password', 'placeholder' => 'Senha')) }}
+                    {{ Form::password('password', array('class' => 'form-control', 'id' => 'password', 'placeholder' => 'Senha')) }}
                 </div>
                 <div class="form-group">
                     <div class="checkbox">

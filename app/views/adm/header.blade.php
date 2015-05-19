@@ -31,7 +31,10 @@
     <script src="{{ asset('js/xgen.js') }}"></script>
     <!--js do app-->
     <script src="{{ asset('js/app.js') }}"></script>
-    
+    <script type="text/javascript">
+		var baseURL = '{{ URL::to('/') }}';
+		var baseRequest = '{{ Request::url() }}';
+	</script>
    <style>
        body,
        html

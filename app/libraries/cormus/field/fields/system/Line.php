@@ -25,6 +25,6 @@ class Line extends Field
         $html = '<h1>'.$this->getTitle().'</h1>';
 		if($this->getSubTitle())  
 			$html .= '<span class="subtitle">'.$this->getSubTitle().'</span>';
-        return '<div class="width-100-l border-red">'. $html.'</div>';
+        return '<div class="width-100-l">'. $html.'</div>';
     }
 }
