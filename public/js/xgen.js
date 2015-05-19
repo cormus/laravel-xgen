@@ -134,7 +134,7 @@ $(function(){
         $(obj).mask($(obj).attr('mask')); 
     });
 
-    $(".money").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+    $(".maskMoney").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
 
     $('.onchange').change(function(){
 
