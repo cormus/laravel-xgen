@@ -493,7 +493,7 @@ class XForm extends Eloquent
                         if(isset($message))
                         {
                             $class = ($error == 0)? 'alert-success': 'alert-danger';
-                            $html .= '<div class="alert '.$class.'">
+                            $html .= '<div class="alert '.$class.' width-100-l">
                                             <a href="#" class="alert-link">
                                                 '.$message.'
                                             </a>

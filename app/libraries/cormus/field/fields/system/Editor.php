@@ -74,4 +74,38 @@ class Editor extends Field{
 		
 		return $html;
     }
+	
+	public function treatmentValue($row)
+    {
+        $name  = $this->getName();
+		$value = $this->applyStringLimits(strip_tags($row->$name), 100);
+        if($value)
+        {
+			return $value;
+        }
+		else
+		{
+			return '-';
+		}
+    }
+	
+	function applyStringLimits($string, $max_size)
+	{
+			$string = trim($string);
+
+			if ($max_size != 0) {
+				if (strlen($string) > $max_size) {
+					$words = explode(' ', $string);
+					array_pop($words);
+
+					while (strlen(implode(' ', $words)) > $max_size) {
+						array_pop($words);
+					}
+
+					$string = implode(' ', $words) . '...';
+				}
+			}
+
+		return $string;
+	}
 }

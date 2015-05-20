@@ -24,7 +24,7 @@ class Imagebox extends Field{
     
     public function render($row)
     {
-        $required = '';
+		$required = '';
         if($this->getRequired())
            $required = '<span class="required">*</span>';
         
@@ -43,27 +43,28 @@ class Imagebox extends Field{
 			$value = $this->getValue();
 		}
 
-		$html = '';
-		$images = json_decode($value);
+		//print_r($value);
+		//die();
+		$html = '<ul class="lista-imagens">';
+		$images = json_decode(str_replace('\'', '"', $value));
 		if(!empty($images))
 		{
-			foreach($images as $image)
+			foreach($images as $i => $image)
 			{
-				$html .= '<img src="'.URL::to("imagem.php?p={$image}&w=150&h=150").'" data="'.$image.'" class="'.$this->getName().'-img"/>';
+				$html .= '<li class="float-l" id="image-'.($i + 1).'"><a class="remover" href="javascript:responsive_filemanager_remove('.($i + 1).')">remover</a><br /><img src="'.URL::to("imagem.php?p={$image}&w=100&h=100").'" data="'.$image.'" class="'.$this->getName().'-img"/></li>';
 			}
 		}
+		$html .= '<li class="mais-imagem" 	id="'.$this->getName().'-imgs"><a href="bawer/tinymce_4.1.9/plugins/filemanager/dialog.php?type=1&field_id='.$this->getName().'-url" class="iframe-btn" type="button"><img src="'.URL::to('bawer/xgen/mais-imagens.jpg').'"/></a></li></ul>';
 		
 	 	return '<div class="form-group">
                     '.Form::label($this->getName(), $this->getTitle())
                      .$required
                      .$subTitle
-                     .'<input id="'.$this->getName().'"     type="hidden"  value="'.$value.'" id="'.$this->getName().'"/>
-					   <input  id="'.$this->getName().'-url" type="hidden"/>
+                     .'<input name="'.$this->getName().'"     id="'.$this->getName().'" type="hidden" value="'.str_replace('"', '\'', $value).'" id="'.$this->getName().'"/>
+					   <input name="'.$this->getName().'-url" id="'.$this->getName().'-url" type="hidden"/>
 					   <div class="width-100-l">'.$html.'</div>
                 </div>
 				
-				<div id="'.$this->getName().'-imgs"></div>
-				<a href="bawer/tinymce_4.1.9/plugins/filemanager/dialog.php?type=1&field_id='.$this->getName().'-url" class="btn iframe-btn" type="button">Select</a>
 				<script type="text/javascript">
 					 var baseImg = "'.URL::asset('/').'";
 					 $(function(){
@@ -74,16 +75,28 @@ class Imagebox extends Field{
 							  "autoScale": false
 						});
 					 });
+					 
 					 function responsive_filemanager_callback(field_id)
 					 {
-						var url  = $("#"+field_id).val();
+					 	var i = $(".lista-imagens li").length;
+						var url = $("#"+field_id).val();
 						url = url.replace(baseImg, "");
-						$("#'.$this->getName().'-imgs").append("<img src=\'"+baseImg+"imagem.php?p="+url+"&w=150&h=150\' data=\'"+url+"\' class=\''.$this->getName().'-img\'/>");
+						$("#'.$this->getName().'-imgs").before(\'<li class="float-l" id="image-\'+i+\'"><a class="remover" href="javascript:responsive_filemanager_remove(\'+i+\')">remover</a><br /><img src="\'+baseImg+\'imagem.php?p=\'+url+\'&w=100&h=100" data="\'+url+\'" class="'.$this->getName().'-img"/></li>\');
 						var imgs = [];
 						$(".'.$this->getName().'-img").each(function(i, data){
 							imgs.push($(data).attr("data"));
 						});
-						$("#'.$this->getName().'").val(JSON.stringify(imgs));
+						$("#'.$this->getName().'").val(replaceAll(JSON.stringify(imgs), "\"", "\'"));
+					 }
+					 
+					 function responsive_filemanager_remove(data)
+					 {
+					 	$("#image-"+data).remove();
+						var imgs = [];
+						$(".'.$this->getName().'-img").each(function(i, data){
+							imgs.push($(data).attr("data"));
+						});
+						$("#'.$this->getName().'").val(replaceAll(JSON.stringify(imgs), "\"", "\'"));
 					 }
 				</script>';
     }
@@ -93,10 +106,10 @@ class Imagebox extends Field{
         $name = $this->getName();
         if($row->$name)
         {
-            $images = json_decode($row->$name);
+			$images = json_decode(str_replace('\'', '"', $row->$name));
             if(!empty($images))
             {
-                return '<img src="'.URL::to("imagem.php?p={$this->path}/{$images[0]}&w=150&h=150").'"/>';
+                return '<img src="'.URL::to("imagem.php?p={$images[0]}&w=100&h=100").'"/>';
             }
         }
     }
