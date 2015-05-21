@@ -13,7 +13,12 @@
  */
 class Cep extends Field
 {
-	var $data = array('id' => $this->getName(), 'placeholder' => '');
+	var $data = array();
+	
+	public function __construct()
+	{
+		$this->data = array('id' => $this->getName(), 'placeholder' => '');
+	}
 	
     public function references($bairro = null, $logradouro = null, $uf = null, $localidade = null, $cep = null)
 	{
@@ -60,7 +65,7 @@ class Cep extends Field
                      .$required
                      .$subTitle
                      .Form::text($this->getName(), $value,  $this->data).'
-					 <a href="http://m.correios.com.br/movel/buscaCep.do" target="__blank">Não sei o cep</a>
+					 <a href="http://m.correios.com.br/movel/buscaCep.do" target="__blank">NÃ£o sei o cep</a>
                 </div>
 				<script type="text/javascript">
 					function searchByAddress(obj)
@@ -69,9 +74,23 @@ class Cep extends Field
 						var value = obj.val();
 						if(value.length === 9)
 						{
+							$.fancybox("Aguarde...", {
+									closeBtn : false,
+									closeClick : false,
+									helpers : { 
+										overlay : {
+											closeClick: false
+										} // prevents closing when clicking OUTSIDE fancybox
+									},
+									keys : {
+										close: null
+									}
+							});
+							
 							value = value.replace("-", "");
-							$.get( 
-								"http://cep.correiocontrol.com.br/"+value+".json", 
+							$.post( 
+								baseURL+"/ajax/cep", 
+								{cep:value},
 								function(data) 
 								{
 									var bairro 	   = obj.attr("bairro");
@@ -100,6 +119,8 @@ class Cep extends Field
 									{
 										$("input[name="+cep+"]").val(data.cep);
 									}
+									
+									$.fancybox.close();
 								},
 								"json"
 							);

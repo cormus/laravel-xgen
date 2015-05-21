@@ -24,6 +24,15 @@ ul
 	  float: left;
 	}
 
+/*--padronização de modificações no bootstrap--*/
+.form-control
+{
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+    box-shadow: none;
+}
+
 /*--Field da página de contato---*/
 
 .login-page-box
@@ -46,3 +55,8 @@ ul
 		font-size: 14px;
 		line-height: 1.42857143;
 	}
+
+#btn-search
+{
+	margin-left: -57px;
+}
