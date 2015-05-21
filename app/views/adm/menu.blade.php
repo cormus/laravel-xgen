@@ -2,7 +2,7 @@
 <div class="navbar-wrapper">
     <div class="container">
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
+            <div class="width-100-l">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
@@ -59,7 +59,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav float-r">
                     @if($logued)
                         <li><a href="#">{{ $email }}</a></li>
                         <li><a href="{{ URL::to('login/logout') }}">Sair</a></li>

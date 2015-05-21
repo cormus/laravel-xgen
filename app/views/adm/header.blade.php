@@ -16,6 +16,7 @@
     <link href="{{ asset('css/xgen.flash.css') }}" rel="stylesheet">
     <!--css do app-->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/adm.css') }}" rel="stylesheet">
     
     <!-- js padrões -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

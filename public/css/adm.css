@@ -1,0 +1,48 @@
+/*--Field de lista de imagens---*/
+
+ul
+{
+  padding: 0;
+  list-style: none;
+}
+
+	.lista-imagens li
+	{
+		border:1px solid rgb(164, 153, 153);
+		margin-right: 5px;
+		background-color: #FFF;
+		float: left;
+		width: 100px;
+		height: 100px;
+		overflow: hidden
+	}	
+
+	.lista-imagens li .remover
+	{
+	  width: 100%;
+	  text-align: center;
+	  float: left;
+	}
+
+/*--Field da página de contato---*/
+
+.login-page-box
+{
+	  max-width: 405px;
+	  margin: 0 auto;
+	  width: 100%;
+	  background-color: #eceef1;
+      padding: 0px 30px 30px 30px;
+}
+	.login-page-box .form-input
+	{
+		background-color: #dde3ec;
+		height: 43px;
+		color: #8290a3;
+		border: 1px solid #dde3ec;
+		display: block;
+		width: 100%;
+		padding: 6px 12px;
+		font-size: 14px;
+		line-height: 1.42857143;
+	}

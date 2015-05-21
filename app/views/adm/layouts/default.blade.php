@@ -11,10 +11,10 @@
         @endif
         <div class="container-fluid  height-100">
             <div style="margin-top: 50px;" class="row height-100">
-                <div class="col-sm-3 col-md-2 sidebar">
+                <div class="col-sm-3 col-md-1 sidebar">
 					{{ $menuLeft }}
                 </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main  height-100">
+                <div class="col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-1 main  height-100">
                     @if(isset($center))
                         {{ $center }}
                     @endif
