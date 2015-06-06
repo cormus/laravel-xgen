@@ -92,7 +92,6 @@ class Select  extends Field{
     {
         if(!$this->query)
             $this->query = DB::table($this->gettable());
-        
         return $this->query;
     }
     
@@ -104,7 +103,8 @@ class Select  extends Field{
         
         if($this->gettable() && ($this->getLoadList() || $row))
         {
-            $values  = $this->getQuery()->select($option, $column)->get();
+            $query  = $this->getQuery();
+            $values = $query->select($option, $column)->get();
             //organiza os dados no formato do select laravel
             foreach($values as $value)
             {
@@ -151,7 +151,8 @@ class Select  extends Field{
         //verifica se não foi add valors diretamente
         if(count($options) == 1)
         {
-            $row  = $this->getQuery()->select($this->column)->where($this->option, '=', $row->$name)->first();
+            $query = DB::table($this->gettable()); 
+            $row   = $query->select($this->column)->where($this->option, '=', $row->$name)->first();
             if($row)
             {
                 $name = $this->column;
@@ -180,7 +181,8 @@ class Select  extends Field{
         
         if($this->gettable())
         {
-            $values    = $this->getQuery()->select($option, $column)->get();
+            $query  = $this->getQuery();
+            $values = $query->select($option, $column)->get();
             //organiza os dados no formato do select laravel
             foreach($values as $value)
             {

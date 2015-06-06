@@ -43,10 +43,8 @@ class Imagebox extends Field{
 			$value = $this->getValue();
 		}
 
-		//print_r($value);
-		//die();
 		$html = '<ul class="lista-imagens">';
-		$images = json_decode(str_replace('\'', '"', $value));
+		$images = json_decode($value);
 		if(!empty($images))
 		{
 			foreach($images as $i => $image)
@@ -60,7 +58,7 @@ class Imagebox extends Field{
                     '.Form::label($this->getName(), $this->getTitle())
                      .$required
                      .$subTitle
-                     .'<input name="'.$this->getName().'"     id="'.$this->getName().'" type="hidden" value="'.str_replace('"', '\'', $value).'" id="'.$this->getName().'"/>
+                     .'<input name="'.$this->getName().'"     id="'.$this->getName().'" type="hidden" value=\''.$value.'\' id="'.$this->getName().'"/>
 					   <input name="'.$this->getName().'-url" id="'.$this->getName().'-url" type="hidden"/>
 					   <div class="width-100-l">'.$html.'</div>
                 </div>
@@ -86,7 +84,7 @@ class Imagebox extends Field{
 						$(".'.$this->getName().'-img").each(function(i, data){
 							imgs.push($(data).attr("data"));
 						});
-						$("#'.$this->getName().'").val(replaceAll(JSON.stringify(imgs), "\"", "\'"));
+						$("#'.$this->getName().'").val(JSON.stringify(imgs));
 					 }
 					 
 					 function responsive_filemanager_remove(data)
@@ -96,7 +94,7 @@ class Imagebox extends Field{
 						$(".'.$this->getName().'-img").each(function(i, data){
 							imgs.push($(data).attr("data"));
 						});
-						$("#'.$this->getName().'").val(replaceAll(JSON.stringify(imgs), "\"", "\'"));
+						$("#'.$this->getName().'").val(JSON.stringify(imgs));
 					 }
 				</script>';
     }
