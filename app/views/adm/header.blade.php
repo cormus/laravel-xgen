@@ -7,7 +7,7 @@
 
     <title>Carousel Template for Bootstrap</title>
 
-   <link href="{{ asset('bawer/font-awesome-4.3.0/css/font-awesome.min.css') }}" rel="stylesheet">
+   <link href="{{ asset('bawer/font-awesome-4.4.0/css/font-awesome.min.css') }}" rel="stylesheet">
     
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('bawer/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">

@@ -1,0 +1,417 @@
+﻿<div class="row-fluid" ng-app="xgen">
+	<div class="col-md-2"></div>
+	<div class="col-md-8" ng-controller="XgenController">
+		<table class="table">
+			<thead>
+				<tr>
+				  <th>Título</th>
+				  <th class="hidden-xs">Rota</th>
+				  <th style="width:50px">Editar</th>
+				  <th style="width:50px">Remover</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="(i, row) in pages">
+				  <td>{{ row.title }}</td>
+				  <td class="hidden-xs">{{ row.rout }}</td>
+				  <td>
+						<button data-ng-click="editPage(i)" type="button" class="btn btn-default btn-xs">
+						  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit
+						</button>
+				  </td>
+				  <td>
+						<button data-ng-click="deletPage(i)" type="button" class="btn btn-default btn-xs">
+						  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Deletar
+						</button>
+				  </td>
+				</tr>
+			</tbody>
+		</table>
+		<button data-ng-click="newPage()" type="button" class="btn btn-link">+ Add page</button>
+		
+		<div id="page" data-ng-if="id_page != null">
+			<h2>Dados da página</h2>
+			<p>Aqui você cadastra os dados da página:</p>
+			<div class="bs-example tooltip-demo">
+				<div class="form-group">
+					<label for="title">Título</label>
+					<input  data-ng-model="page.title" class="form-control" name="title" id="title" value="" type="text"  data-ng-change="preencherRota()"/>
+				</div>
+				<div class="form-group">
+					<label for="title">Ícone <button data-ng-click="openIcones()" type="button" class="btn btn-link">Icone</button></label>
+					<input  data-ng-model="page.icone" class="form-control" name="icone" id="icone" value="" type="text" />
+				</div>
+				<div class="form-group">
+					<label for="rota">Rota</label>
+					<input class="form-control" name="rota" id="rota"  type="text" data-ng-model="page.rout" data-ng-change="verificarRota()"/>
+				</div>
+				<div class="form-group">
+					<h4>Deseja que seja criado esses arquivos ?</h4>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="page.controller" name="controller" type="checkbox" /> Criar o controle
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="page.module" name="modulo" type="checkbox" /> Criar o módulo
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="page.view" name="view" type="checkbox" />Criar a view
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<h4>Configuração de acesso</h4>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="page.loginRequired" name="loginRequired" type="checkbox" /> Login requerido
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="page.showInMenuIfLogged" name="showInMenuIfLogged" type="checkbox" /> Mostrar no menu se logado
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="page.showInMenu" name="showInMenu" type="checkbox" /> Mostrar no menu
+						</label>
+					</div>
+				</div>
+				<div class="bs-example tooltip-demo">
+					<table class="table" data-ng-if="page.form">
+						<thead>
+							<tr>
+							  <th class="hidden-xs">Título</th>
+							  <th class="hidden-xs">Tabela</th>
+							  <th style="width:50px">Editar</th>
+							  <th style="width:50px">Remover</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							  <td>{{ page.form.title }}</td>
+							  <td class="hidden-xs">{{ page.form.table }}</td>
+							  <td>
+									<button  data-ng-click="editForm()" type="button" class="btn btn-default btn-xs">
+										<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit
+									</button>
+							  </td>
+							  <td>
+									<button data-ng-click="deletForm()" type="button" class="btn btn-default btn-xs">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Deletar
+									</button>
+							  </td>
+							</tr>
+						</tbody>
+					</table>
+					<button data-ng-click="newForm()" data-ng-if="page.form == null" type="button" class="btn btn-link">Criar Formulário</button>
+				</div>
+			</div>
+			<div class="pull-right">
+				<button data-ng-click="savePage()"     type="button" class="btn btn-success">Salvar</button>
+				<button data-ng-click="cancelCreatePage()" type="button" class="btn btn-primary">Concelar</button>
+			</div>
+		</div>
+		<!--/page-->
+		<div id="form"  data-ng-if="modalOpenForm">
+			<h2>Dados do formulário</h2>
+			<p>Aqui você cadastra os dados do seu formulário:</p>
+			<div class="bs-example tooltip-demo" id="form">
+				<div clss="form-dados">
+					<div class="form-group">
+						<label for="tabela">Nome da tabela</label>
+						<input data-ng-model="form.table" class="form-control" name="tabela" id="tabela" value="xgen_" type="text" />
+					</div>
+					<div class="form-group">
+						<label for="title">Título</label>
+						<input data-ng-model="form.title" class="form-control" name="title" id="title" value="" type="text" />
+					</div>
+					<div class="form-group">
+						<label for="subtitulo">Subtítulo</label>
+						<input data-ng-model="form.subTitle"  class="form-control" name="subtitulo" id="subtitulo" value="" type="text" />
+					</div>
+					<div class="form-group">
+						<h4>Deseja que seja mostrado esses botões ?</h4>
+						<div class="checkbox">
+							<label>
+								<input data-ng-model="form.showBtnNewCadastre" name="showBtnNewCadastre" type="checkbox" /> Novo cadastro
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input data-ng-model="form.showBtnEdit" name="showBtnEdit" type="checkbox" /> Editar linha
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input data-ng-model="form.showBtnDelete" name="showBtnDelete" type="checkbox" /> Deletar linha
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input data-ng-model="form.showSelectBox" name="showSelectBox" type="checkbox" /> Campo de seleção
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="bs-example tooltip-demo">
+					<table class="table">
+						<thead>
+							<tr>
+							  <th>Título</th>
+							  <th class="hidden-xs">Nome</th>
+							  <th class="hidden-xs">Tipo</th>
+							  <th style="width:50px">Editar</th>
+							  <th style="width:50px">Remover</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="(i, row) in pages[id_page].form.fields">
+							  <td>{{ row.title }}</td>
+							  <td class="hidden-xs">{{ row.name }}</td>
+							  <td class="hidden-xs">{{ row.type }}</td>
+							  <td>
+									<button data-ng-click="editField(i)" type="button" class="btn btn-default btn-xs">
+									  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Edit
+									</button>
+							  </td>
+							  <td>
+									<button data-ng-click="deletField(row.name)" type="button" class="btn btn-default btn-xs">
+									  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Deletar
+									</button>
+							  </td>
+							</tr>
+						</tbody>
+					</table>
+					<button data-ng-click="newField()" type="button" class="btn btn-link">+ Campo</button>
+				</div>
+			</div>
+			<div class="pull-right">
+				<button type="button" class="btn btn-success" data-ng-click="saveForm()">Salvar</button>
+				<button type="button" class="btn btn-primary" data-ng-click="openModalForm()">Concelar</button>
+			</div>
+		</div>
+		<!--/form-->
+		<div id="field" data-ng-if="modalOpenField">
+			<h2>Configuração de field</h2>
+			<p>Selecione as opções desejadas para seu field:</p>
+			<div class="bs-example tooltip-demo form-dados">
+				<div class="form-group">
+					<label for="field_title">Título do field</label>
+					<input data-ng-model="fieldc.title" class="form-control" name="field_title" id="field_title" type="text" data-ng-change="preencherFieldName()"/>
+				</div>
+				<div class="form-group">
+					<label for="field_name">Nome do field</label>
+					<input data-ng-model="fieldc.name" class="form-control" name="field_name" id="field_name" type="text" data-ng-change="verificarFieldName()"/>
+				</div>
+				<div class="form-group">
+					<h4>Configuração</h4>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="fieldc.required" name="required" type="checkbox"> Campo Obrigatório
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="fieldc.showform" name="showform" type="checkbox"> Mostrar no formulário
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="fieldc.showlist" name="showlist" type="checkbox"> Mostrar na listagem
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input data-ng-model="fieldc.filter" name="filter" type="checkbox"> Incluir fitro de busca
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tabela">Tipo de field</label>
+					<select data-ng-model="fieldc.type" class="form-control" name="fieldType" id="field_type">
+						<option value="">Selecione uma opção</option>
+						<option value="text">Text</option>
+						<option value="textarea">Textarea</option>
+						<option value="editor">Editor</option>
+						<option value="select">Select</option>
+						<option value="checkbox">Checkbox</option>
+						<option value="radiobutton">Radiobutton</option>
+						<option value="date">Date</option>
+						<option value="cep">Cep</option>
+						<option value="int">Int</option>
+						<option value="line">Line</option>
+						<option value="monetary">Monetary</option>
+						<option value="password">Password</option>
+						<option value="imagebox">Imagebox</option>
+						<option value="image">Image</option>
+					</select>
+				</div>
+				<div id="select" class="bs-example tooltip-demo" data-ng-show="fieldc.type == 'select'">
+					<h4>Configuração do field Select</h4>
+					<p>Essas configurações são específicas para esse field</p>
+					<div class="form-group">
+						<label for="tabela">Preencher campo com:</label>
+						<div class="radio">
+							<label>
+								<input name="select_preencher" type="radio" data-ng-model="fieldc.select.preencher" value="1"/> Dados vindos de uma tabela
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input name="select_preencher" type="radio" data-ng-model="fieldc.select.preencher" value="0"/> Informar opções manualmente
+							</label>
+						</div>
+					</div>
+					<div data-ng-show="fieldc.select.preencher == 1">
+						<div class="form-group">
+							<label for="select_table">Nome da tabela</label>
+							<input data-ng-model="fieldc.select.table" class="form-control" name="select_table" id="select_table" type="text"/>
+						</div>
+						<div class="form-group">
+							<label for="select_option">Chave</label>
+							<input data-ng-model="fieldc.select.option" class="form-control" name="select_option" id="select_option"  type="text"/>
+						</div>
+						<div class="form-group">
+							<label for="select_column">Valor</label>
+							<input data-ng-model="fieldc.select.column" class="form-control" name="select_column" id="select_column" type="text"/>
+						</div>
+					</div>
+				</div>
+				<div id="checkbox" class="bs-example tooltip-demo" data-ng-show="fieldc.type == 'checkbox'">
+					<h4>Configuração do field Checkbox</h4>
+					<p>Essas configurações são específicas para esse field</p>
+					<div class="form-group">
+						<label for="tabela">Preencher campo com:</label>
+						<div class="radio">
+							<label>
+								<input name="checkbox_preencher" type="radio" data-ng-model="fieldc.checkbox.preencher" value="1"> Dados vindos de uma tabela
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input name="checkbox_preencher" type="radio" data-ng-model="fieldc.checkbox.preencher" value="0"> Informar opções manualmente
+							</label>
+						</div>
+					</div>
+					<div data-ng-show="fieldc.checkbox.preencher == 1">
+						<div class="form-group">
+							<label for="checkbox_tabela">Nome da tabela</label>
+							<input data-ng-model="fieldc.checkbox.table" class="form-control" name="checkbox_tabela" id="checkbox_tabela" type="text">
+						</div>
+						<div class="form-group">
+							<label for="checkbox_chave">Chave</label>
+							<input data-ng-model="fieldc.checkbox.option" class="form-control" name="checkbox_chave" id="checkbox_chave" type="text">
+						</div>
+						<div class="form-group">
+							<label for="checkbox_column">Valor</label>
+							<input data-ng-model="fieldc.checkbox.column" class="form-control" name="checkbox_column" id="checkbox_column" type="text">
+						</div>
+					</div>
+				</div>
+				<div id="radio" class="bs-example tooltip-demo" data-ng-show="fieldc.type == 'radiobutton'">
+					<h4>Configuração do field Radiobutton</h4>
+					<p>Essas configurações são específicas para esse field</p>
+					<div class="form-group">
+						<label for="tabela">Preencher campo com:</label>
+						<div class="radio">
+							<label>
+								<input name="preencher" type="radio" data-ng-model="fieldc.radiobutton.preencher" value="1"/> Dados vindos de uma tabela
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input name="preencher" type="radio" data-ng-model="fieldc.radiobutton.preencher" value="0"/> Informar opções manualmente
+							</label>
+						</div>
+					</div>
+					<div data-ng-show="fieldc.radiobutton.preencher == 1">
+						<div class="form-group">
+							<label for="radiobutton_table">Nome da tabela</label>
+							<input data-ng-model="fieldc.radiobutton.table" class="form-control" name="radiobutton_table" id="radiobutton_table" type="text">
+						</div>
+						<div class="form-group">
+							<label for="radiobutton_option">Chave</label>
+							<input data-ng-model="fieldc.radiobutton.option" class="form-control" name="radiobutton_option" id="radiobutton_option" type="text">
+						</div>
+						<div class="form-group">
+							<label for="radiobutton_column">Valor</label>
+							<input data-ng-model="fieldc.radiobutton.column" class="form-control" name="radiobutton_column" id="radiobutton_column" type="text">
+						</div>
+					</div>
+				</div>
+				<div id="cep" class="bs-example tooltip-demo" data-ng-show="fieldc.type == 'cep'">
+					<h4>Configuração do field Cep</h4>
+					<p>Essas configurações são específicas para esse field</p>
+					<div class="form-group">
+						<label for="bairro">Bairro</label>
+						<input data-ng-model="fieldc.cep.bairro" class="form-control" name="tabela" id="bairro" type="text">
+					</div>
+					<div class="form-group">
+						<label for="logradouro">Logradouro</label>
+						<input data-ng-model="fieldc.cep.logradouro" class="form-control" name="logradouro" id="logradouro" type="text">
+					</div>
+					<div class="form-group">
+						<label for="uf">Uf</label>
+						<input data-ng-model="fieldc.cep.uf" class="form-control" name="uf" id="uf" type="text">
+					</div>
+					<div class="form-group">
+						<label for="localidade">Localidade</label>
+						<input data-ng-model="fieldc.cep.localidade" class="form-control" name="localidade" id="localidade" type="text">
+					</div>
+					<div class="form-group">
+						<label for="cep">Cep</label>
+						<input data-ng-model="fieldc.cep.cep" class="form-control" name="cep" id="cep" type="text">
+					</div>
+				</div>
+				<div id="image" class="bs-example tooltip-demo" data-ng-show="fieldc.type == 'image'">
+					<h4>Configuração do field Image</h4>
+					<p>Essas configurações são específicas para esse field</p>
+					<div class="form-group">
+						<label for="image_path">Caminho da pasta de imagens, data/</label>
+						<input data-ng-model="fieldc.image.path"  class="form-control" name="image_path" id="image_path" type="text">
+					</div>
+				</div>
+			</div>
+			<div class="pull-right">
+				<button data-ng-click="saveField()" type="button" class="btn btn-success">Salvar</button>
+				<button data-ng-click="openModalField()" type="button" class="btn btn-primary">Concelar</button>
+			</div>
+		</div>
+		<!--/field-->
+	</div>
+	<div class="col-md-2"></div>
+</div>
+
+
+<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="../fancyBox/source/jquery.fancybox.css?v=2.1.5" media="screen" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../fancyBox/lib/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../fancyBox/source/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript" src="xgen.js"></script>
+
+<style type="text/css">
+	.bs-example 
+	{
+		margin-right: 0px;
+		margin-left: 0px;
+		background-color: #FFF;
+		border-color: #DDD;
+		border-width: 1px;
+		border-radius: 4px 4px 0px 0px;
+		box-shadow: none;
+	}
+	.bs-example 
+	{
+		position: relative;
+		padding: 45px 15px 15px;
+		border-style: solid;
+		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.05) inset;
+	}
+</style>
