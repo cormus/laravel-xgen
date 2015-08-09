@@ -363,7 +363,7 @@ class XForm extends Eloquent
             $updates = array();
             foreach($this->fields as $field)
 			{
-					if($field->getName())
+                    if($field->getName())
 					{
 					$field->setRow($row);
 					$name  = $field->getName();
@@ -398,7 +398,7 @@ class XForm extends Eloquent
 					//verifica se existe o método run, esse método é executado de forma automática caso ele exista
 					if(method_exists($field,'run'))
 					{
-						$value = $field->run();
+                        $value = $field->run();
 						//caso o método run retorne alguma coisa, salva no banco de dados
 						if($value)
 							$updates[$name] = $value;
@@ -409,46 +409,47 @@ class XForm extends Eloquent
 						$updates[$name] = $value;
 					}
 				}
+            }
 
-				//só salva se todos os campos obrigatórios foram preenchidos
-				if($return < 2)
-				{
-					$db = DB::table($this->table);
-					//se exitir uma ID atualiza
-					//se não realiza um novo cadastro
-					if($id)
-					{
-						$updates['updated_at'] = date('Y-m-d H:i:s');
-						$return = $db->where('id', $id)->update($updates);
+            //só salva se todos os campos obrigatórios foram preenchidos
+            if($return < 2)
+            {
+                $db = DB::table($this->table);
+                //se exitir uma ID atualiza
+                //se não realiza um novo cadastro
+                if($id)
+                {
+                    $updates['updated_at'] = date('Y-m-d H:i:s');
+                    $return = $db->where('id', $id)->update($updates);
 
-						if($this->runAfterSaving != null)
-						{
-							$runAfterSaving = $this->runAfterSaving;
-							$runAfterSaving($id);
-						}
-					}
-					else
-					{
-						$updates['created_at'] = date('Y-m-d H:i:s');
-						$updates['updated_at'] = date('Y-m-d H:i:s');
+                    if($this->runAfterSaving != null)
+                    {
+                        $runAfterSaving = $this->runAfterSaving;
+                        $runAfterSaving($id);
+                    }
+                }
+                else
+                {
+                    $updates['created_at'] = date('Y-m-d H:i:s');
+                    $updates['updated_at'] = date('Y-m-d H:i:s');
 
-						$return = $db->insertGetId($updates);
-						//quando salva um novo registro muda a URL para a id inserida
-						if($return)
-						{
-							if($this->runAfterSaving != null)
-							{
-								$runAfterSaving = $this->runAfterSaving;
-								$runAfterSaving($id);
-							}
-							 header("Location:".URL::to(Request::url().'/?id='.$return.'&save=1'));
-							 exit();
-						}
-					}
-				}
 
-				$row = (object) $updates;
-			}
+                    $return = $db->insertGetId($updates);
+                    //quando salva um novo registro muda a URL para a id inserida
+                    if($return)
+                    {
+                        if($this->runAfterSaving != null)
+                        {
+                            $runAfterSaving = $this->runAfterSaving;
+                            $runAfterSaving($id);
+                        }
+                         header("Location:".URL::to(Request::url().'/?id='.$return.'&save=1'));
+                         exit();
+                    }
+                }
+            }
+
+            $row = (object) $updates;
         }
         
         //mensagem de status
