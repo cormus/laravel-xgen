@@ -66,6 +66,8 @@ angular.module('xgen', [])
 	{
 		//fecha a página de formulário
 		$scope.pageForm = 0;
+		//cancela a inserção da página
+		$scope.pages.splice($scope.id_page, 1);
 	};
 	
 	function retirarAcentos(palavra) 
@@ -176,13 +178,18 @@ angular.module('xgen', [])
 	
 	$scope.openModalForm = function()
 	{
-		$scope.pageForm = ($scope.pageForm == 2)? 1: 2;
+		$scope.pageForm = 2;
+	}
+	
+	$scope.cancelForm = function()
+	{
+		//fecha a tela de formulário
+		$scope.pageForm = 1;
 	}
 	
 	$scope.newForm = function()
 	{
 		__initForm();
-		$scope.pages[$scope.id_page].form = $scope.form;
 		$scope.pageForm = 2;
 	}
 	
@@ -199,7 +206,7 @@ angular.module('xgen', [])
 	$scope.editForm = function()
 	{
 		$scope.form   = $scope.pages[$scope.id_page].form;
-		$scope.fields = $scope.pages[$scope.id_page].form.fields;
+		$scope.fields = $scope.form.fields;
 		$scope.openModalForm();
 	}
 	
