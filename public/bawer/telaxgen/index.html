@@ -1,7 +1,7 @@
 ﻿<div class="row-fluid" ng-app="xgen">
 	<div class="col-md-2"></div>
 	<div class="col-md-8" ng-controller="XgenController">
-		<table class="table">
+		<table class="table"  data-ng-if="pageForm == 0">
 			<thead>
 				<tr>
 				  <th>Título</th>
@@ -26,10 +26,17 @@
 				  </td>
 				</tr>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						<button data-ng-click="newPage()" type="button" class="btn btn-link">+ Add page</button>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
-		<button data-ng-click="newPage()" type="button" class="btn btn-link">+ Add page</button>
 		
-		<div id="page" data-ng-if="id_page != null">
+		
+		<div id="page" data-ng-if="pageForm == 1">
 			<h2>Dados da página</h2>
 			<p>Aqui você cadastra os dados da página:</p>
 			<div class="bs-example tooltip-demo">
@@ -117,7 +124,7 @@
 			</div>
 		</div>
 		<!--/page-->
-		<div id="form"  data-ng-if="modalOpenForm">
+		<div id="form"  data-ng-if="pageForm == 2">
 			<h2>Dados do formulário</h2>
 			<p>Aqui você cadastra os dados do seu formulário:</p>
 			<div class="bs-example tooltip-demo" id="form">
@@ -196,7 +203,7 @@
 			</div>
 		</div>
 		<!--/form-->
-		<div id="field" data-ng-if="modalOpenField">
+		<div id="field" data-ng-if="pageForm == 3">
 			<h2>Configuração de field</h2>
 			<p>Selecione as opções desejadas para seu field:</p>
 			<div class="bs-example tooltip-demo form-dados">

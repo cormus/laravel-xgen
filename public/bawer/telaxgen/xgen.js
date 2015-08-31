@@ -2,6 +2,8 @@
 angular.module('xgen', [])
 .controller('XgenController', ['$scope' , '$http', function($scope, $http){
 	
+	$scope.pageForm = 0;
+	
 	$scope.openIcones = function()
 	{
 		html = '<section id="medical">\n\
@@ -26,7 +28,7 @@ angular.module('xgen', [])
 		$scope.page.icone = icone;
 	}
 	
-/*############ - Funções de página - ##############*/
+   /*############ - Funções de página - ##############*/
 	
 	//inicia o id da página atual
 	$scope.id_page = null;
@@ -62,7 +64,8 @@ angular.module('xgen', [])
 	
 	$scope.cancelCreatePage = function()
 	{
-		$scope.id_page = null;
+		//fecha a página de formulário
+		$scope.pageForm = 0;
 	};
 	
 	function retirarAcentos(palavra) 
@@ -89,6 +92,8 @@ angular.module('xgen', [])
 	$scope.newPage = function()
 	{
 		__initPage();
+		//abre a página de formulário
+		$scope.pageForm = 1;
 		//seta o id da página como a última
 		$scope.id_page = $scope.pages.length;
 		//inicia uma nova página
@@ -97,9 +102,10 @@ angular.module('xgen', [])
 	
 	$scope.editPage = function(id_page)
 	{
-		$scope.id_page = id_page;
-		$scope.page = $scope.pages[$scope.id_page];
-		$scope.form = $scope.pages[$scope.id_page].form;
+		$scope.pageForm = 1;
+		$scope.id_page  = id_page;
+		$scope.page     = $scope.pages[$scope.id_page];
+		$scope.form     = $scope.pages[$scope.id_page].form;
 	}
 	
 	$scope.deletPage = function(id_page)
@@ -139,6 +145,8 @@ angular.module('xgen', [])
 				return false;
 			}
 		}
+		//fecha o formulário de página
+		$scope.pageForm = 0;
 		//guarda a página atual na lista de páginas
 		$scope.pages[$scope.id_page] = $scope.page;
 		//inicia o id da página atual
@@ -152,8 +160,6 @@ angular.module('xgen', [])
 
 /*############### - Funções de formulário - ###############*/
 
-	$scope.modalOpenForm = 0;
-	
 	function __initForm()
 	{
 		$scope.form = {
@@ -170,14 +176,14 @@ angular.module('xgen', [])
 	
 	$scope.openModalForm = function()
 	{
-		$scope.modalOpenForm = ($scope.modalOpenForm == 0)? 1: 0;
+		$scope.pageForm = ($scope.pageForm == 2)? 1: 2;
 	}
 	
 	$scope.newForm = function()
 	{
 		__initForm();
 		$scope.pages[$scope.id_page].form = $scope.form;
-		$scope.modalOpenForm = 1;
+		$scope.pageForm = 2;
 	}
 	
 	$scope.deletForm = function()
@@ -185,7 +191,7 @@ angular.module('xgen', [])
 		//remove o formulário da página atual
 		$scope.pages[$scope.id_page].form = null;
 		//fecha o modal de formulário
-		$scope.modalOpenForm = 0;
+		$scope.pageForm = 1;
 		//limpa os dados do formulário
 		__initForm();
 	}
@@ -225,7 +231,7 @@ angular.module('xgen', [])
 		//atualiza o formulário da página atual
 		$scope.pages[$scope.id_page].form = $scope.form;
 		//fecha o modal de formulário
-		$scope.modalOpenForm = 0;
+		$scope.pageForm = 1;
 		//limpa os dados do formulário
 		__initForm();
 	}
@@ -240,9 +246,6 @@ angular.module('xgen', [])
 	
 	//inicia a listagem de fields
 	$scope.fields = [];
-	
-	//inicia o campo de configurações de modal fechado
-	$scope.modalOpenField = 0;
 	
 	//inicialização dos campos do formulário
 	$scope.fieldc = {
@@ -307,7 +310,7 @@ angular.module('xgen', [])
 	
 	$scope.openModalField = function()
 	{
-		$scope.modalOpenField = ($scope.modalOpenField == 0)? 1: 0;
+		$scope.pageForm = ($scope.pageForm == 3)? 2: 3;
 	}
 	
 	$scope.newField = function()
@@ -317,7 +320,7 @@ angular.module('xgen', [])
 		//limpa o id do field
 		$scope.id_field = null;
 		//abre o modal de configurção de field
-		$scope.modalOpenField = 1;
+		$scope.pageForm = 3;
 	}
 	
 	$scope.deletField = function(fieldName)
@@ -335,7 +338,7 @@ angular.module('xgen', [])
 	{
 		$scope.id_field = id_field;
 		$scope.fieldc   = $scope.pages[$scope.id_page].form.fields[$scope.id_field];
-		$scope.modalOpenField = 1;
+		$scope.pageForm = 3;
 	}
 	
 	$scope.saveField = function()
@@ -442,7 +445,7 @@ angular.module('xgen', [])
 		//limpa os dados do field
 		__initField();
 		//fecha o modal de field
-		$scope.modalOpenField = 0;
+		$scope.pageForm = 2;
 	}
 /*############ - /Funções de field - ##############*/
 }]);
