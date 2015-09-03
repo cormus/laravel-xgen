@@ -7,32 +7,13 @@
 //Route::post('/auth/recoverPassword',       'AuthController@recoverPassword');
 //Route::post('/auth/passwordReset/{token}', 'AuthController@passwordReset');
 
-
-//ajax do sistema para quando existem relação entro os campos select
-Route::post('/ajax/relationship', function()
+Route::post('/ajax/{method?}/{action?}', function($method, $action = null)
 {
-    $id      = Input::get('id');
-    $id_camp = Input::get('id_camp');
-    $table   = Input::get('table');
-    $camp    = Input::get('camp');
-    return DB::table($table)->where($id_camp, '=', $id)->select('id', $camp)->get();
+    $ajaxXgenController = new AjaxXgenController();
+    return $ajaxXgenController->callMetod($method, $action);
 });
 
-Route::post('/ajax/cep', function()
-{
-	$cep = Input::get('cep');
-	$ch  = curl_init();
-	$timeout = 5; // set to zero for no timeout
-	curl_setopt ($ch, CURLOPT_URL, 'http://cep.correiocontrol.com.br/'.$cep.'.json');
-	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-	$file_contents = curl_exec($ch);
-	curl_close($ch);
-	// display file
-	echo $file_contents;
-});
-
-
+    
 $myApp = new XApp();
 $myApp->setTitle('My app');
 

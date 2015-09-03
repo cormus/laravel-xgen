@@ -212,3 +212,49 @@ function replaceAll(string, token, newtoken) {
 	}
 	return string;
 }
+
+
+
+function Table()
+{
+    var obj = {};
+    
+    obj.write = function(table, data, callback)
+    {
+         $.post( 
+            baseURL+'/ajax/table/write?table='+table, 
+            data, 
+            callback,
+            'json'
+        );
+    }
+    obj.read = function(table, callback)
+    {
+        $.post( 
+            baseURL+'/ajax/table/read?table='+table, 
+            {}, 
+            callback,
+            'json'
+        );
+    }
+    obj.delete = function(table, id, callback)
+    {
+        $.post( 
+            baseURL+'/ajax/table/delete?table='+table, 
+            {
+                id:id
+            }, 
+            callback,
+            'json'
+        );
+    }
+    obj.update = function(table, id, data, callback)
+    {
+         $.post( 
+            baseURL+'/ajax/table/update?table='+table+'&id='+id, 
+            data, 
+            callback,
+            'json'
+        );
+    }
+}
