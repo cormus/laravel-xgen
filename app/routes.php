@@ -30,6 +30,7 @@ $myApp->addPage($page);
 $page  = new XPage();
     $page->setRout('/');
     $page->setTitle('Home');
+    $page->setLayout('app.layouts.default');
     $page->setLoginRequired(true);
     $page->setShowInMenuIfLogged(true);
     $page->setShowInMenu(false);
@@ -191,15 +192,20 @@ $myApp->addPage($page);
 $headerController = new  HeaderController();
 $MenuController   = new  MenuController();
 $myApp->addDefullModules('adm.layouts.default', array(
-    'header'   => $headerController->render(),
+    'header'   => $headerController->renderAdm(),
     'menu'     => $MenuController->render(array('projectName'   => $myApp->getTitle(), 'pages' => $myApp->getPages())),
     'menuLeft' => $MenuController->menuLeft(array('projectName' => $myApp->getTitle(), 'pages' => $myApp->getPages()))
 ));
 
 $myApp->addDefullModules('adm.layouts.login', array(
-    'header'   => $headerController->render(),
+    'header'   => $headerController->renderAdm(),
     'menu'     => $MenuController->render(array('projectName'   => $myApp->getTitle(), 'pages' => $myApp->getPages())),
     'menuLeft' => $MenuController->menuLeft(array('projectName' => $myApp->getTitle(), 'pages' => $myApp->getPages()))
+));
+
+$myApp->addDefullModules('app.layouts.default', array(
+    'header'   => $headerController->renderApp(),
+    'menu'     => $MenuController->render(array('projectName'   => $myApp->getTitle(), 'pages' => $myApp->getPages()))
 ));
 
 //executa o aplicativo
